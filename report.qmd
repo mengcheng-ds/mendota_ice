@@ -48,6 +48,7 @@ Before 1900, the lake averaged `r mean_1800s` days of ice.
 Since 2000, it has averaged `r mean_recent`.
 
 The longest winter on record had `r max(ice$ice_days)` days of ice.
+The shortest winter on record had `r min(ice$ice_days)` days of ice.
 
 
 
