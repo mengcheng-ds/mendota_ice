@@ -2,3 +2,7 @@
   posit-connect-cloud:
     - id: 01a1d650-6510-b6cd-1fa8-b0b07faa89cb
       url: https://connect.posit.cloud/mengcheng-ds/content/01a1d650-6510-b6cd-1fa8-b0b07faa89cb
+- source: slides.qmd
+  posit-connect-cloud:
+    - id: 01a21354-932e-500e-90f5-2a26863c8ad9
+      url: https://connect.posit.cloud/mengcheng-ds/content/01a21354-932e-500e-90f5-2a26863c8ad9

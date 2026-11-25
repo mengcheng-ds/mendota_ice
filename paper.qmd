@@ -1,0 +1,75 @@
+---
+title: "Ice Cover on Lake Mendota"
+author: "Meng Cheng"
+date: today
+abstract: |
+  Lake Mendota freezes for fewer days each winter than it did in the 1800s.
+  We summarize more than 170 years of ice records.
+bibliography: refs.bib
+csl: apa.csl
+format:
+  docx: default
+  typst:
+    citeproc: true
+execute:
+  echo: false
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+ice <- read_csv("data/mendota_ice.csv")
+```
+
+## Background
+
+Lake Mendota has been watched for ice since the **1850s** [@magnuson2026].
+
+For each winter, the record notes:
+
+- the date the lake froze
+- the date it opened
+
+## Ice cover over time
+
+```{r}
+#| label: fig-ice_days
+#| fig-cap: "Days of ice cover on Lake Mendota, by winter."
+
+ice |>
+  ggplot(aes(x = year, y = ice_days)) +
+  geom_line() +
+  labs(x = "Winter (year it ended)", y = "Days of ice cover") +
+  theme_minimal()
+```
+
+Ice cover has declined since the 1850s (@fig-ice_days).
+
+```{r}
+#| label: means
+
+mean_1800s <- ice |> filter(year < 1900) |> pull(ice_days) |> mean() |> round()
+mean_recent <- ice |> filter(year >= 2000) |> pull(ice_days) |> mean() |> round()
+```
+
+Before 1900, the lake averaged `r mean_1800s` days of ice.
+Since 2000, it has averaged `r mean_recent`.
+
+The longest winter on record had `r max(ice$ice_days)` days of ice.
+The shortest winter on record had `r min(ice$ice_days)` days of ice.
+
+```{r}
+#| label: tbl-periods
+#| tbl-cap: "Ice cover by half century."
+
+ice |>
+  group_by(half_century = floor(year / 50) * 50) |>
+  summarize(winters = n(), mean_days = round(mean(ice_days))) |>
+  knitr::kable()
+```
+
+@tbl-periods shows the average for each half century.
+
+## References

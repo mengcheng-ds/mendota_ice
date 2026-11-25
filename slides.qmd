@@ -1,0 +1,56 @@
+---
+title: "Less Ice on Lake Mendota"
+author: "Meng Cheng"
+date: today
+format: revealjs
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+ice <- read_csv("data/mendota_ice.csv")
+```
+
+## Background
+
+Lake Mendota has been watched for ice since the **1850s**.
+
+For each winter, the record notes:
+
+- the date the lake froze
+- the date it opened
+
+## Ice cover over time
+
+```{r}
+#| label: ice_plot
+
+ice |>
+  ggplot(aes(x = year, y = ice_days)) +
+  geom_line() +
+  labs(x = "Winter (year it ended)", y = "Days of ice cover") +
+  theme_minimal()
+```
+
+```{r}
+#| label: means
+
+mean_1800s <- ice |> filter(year < 1900) |> pull(ice_days) |> mean() |> round()
+mean_recent <- ice |> filter(year >= 2000) |> pull(ice_days) |> mean() |> round()
+```
+
+## The numbers
+
+- Before 1900: `r mean_1800s` days of ice per winter
+- Since 2000: `r mean_recent` days
+
+. . .
+
+- Shortest winter: `r min(ice$ice_days)` days
+- Longest winter: `r max(ice$ice_days)` days
+
+::: {.notes}
+About a month less ice than in the 1800s.
+:::
